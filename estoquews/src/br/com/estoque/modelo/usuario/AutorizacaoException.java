@@ -1,4 +1,4 @@
-package br.com.estoque.exception;
+package br.com.estoque.modelo.usuario;
 
 import java.util.Date;
 
