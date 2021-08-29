@@ -1,12 +1,16 @@
 package br.com.estoque.ws;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.ParameterStyle;
+import javax.jws.soap.SOAPBinding.Style;
+import javax.jws.soap.SOAPBinding.Use;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -20,22 +24,23 @@ import br.com.estoque.modelo.usuario.TokenDao;
 import br.com.estoque.modelo.usuario.TokenUsuario;
 
 @WebService
+@SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL ,parameterStyle = ParameterStyle.BARE)
 public class EstoqueWS {
 
 	private ItemDao dao = new ItemDao();
 	
-	@WebMethod(operationName = "TodosOsItens")
+	@WebMethod(action = "TodosOsItens", operationName = "TodosOsItens")
 	@RequestWrapper(localName = "listaItens")
 	@ResponseWrapper(localName = "itens")
 	@WebResult(name = "item")
-	public List<Item> getItens(@WebParam(name = "filtros") Filtros filtros) {
+	public ArrayList<Item> getItens(@WebParam(name = "filtros") Filtros filtros) {
 		System.out.println("Chamando getItens() ");
-		List<Filtro> lista = filtros.getLista();
-		List<Item> result = dao.todosItens(lista);
+		ArrayList<Filtro> lista = filtros.getLista();
+		ArrayList<Item> result = dao.todosItens(lista);
 		return result;
 	}
 	
-	@WebMethod(operationName = "CadastrarItem")
+	@WebMethod(action = "CadastrarItens", operationName = "CadastrarItem")
 	@WebResult(name = "item")
 	public Item cadastrarItem(
 			@WebParam(name = "tokenUsuario", header = true) TokenUsuario tokenUsuario,
@@ -55,7 +60,7 @@ public class EstoqueWS {
 	
 //	A anotação @Oneway faz com que o JAX-B saiba que o metodo não terá retorno
 	@Oneway
-	@WebMethod(operationName = "GerarRelatorio")
+	@WebMethod(action = "gerarRelatorio", operationName = "GerarRelatorio")
 	public void gerarRelatorio() {
 		
 	}

@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class InfoFault{
 
+	@SuppressWarnings("unused")
 	private Date dataErro;
+	@SuppressWarnings("unused")
 	private String mensagem;
 	
 	public InfoFault(String mensagem, Date dataErro) {
